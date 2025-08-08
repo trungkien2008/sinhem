@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Quà sinh nhật 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #ffe6f0;
+      overflow: hidden;
+    }
+
+    .container {
+      position: relative;
+      background-color: #ffb6c1;
+      width: 80%;
+      max-width: 800px;
+      height: 500px;
+      margin: auto;
+      margin-top: 50px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .left, .right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .left img {
+      max-width: 100%;
+      border-radius: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    #passwordDisplay {
+      width: 200px;
+      height: 60px;
+      font-size: 24px;
+      margin-bottom: 20px;
+      color: #fff;
+      background-color: #ff8fb1;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .keypad button {
+      width: 60px;
+      height: 60px;
+      margin: 5px;
+      font-size: 20px;
+      border-radius: 10px;
+      border: none;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    #giftBtn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #fff;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Trang 3 */
+    #page3 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ffe6f0;
+      overflow: hidden;
+      z-index: 999;
+    }
+
+.bubble {
+  position: absolute;
+  animation: flyRight 8s forwards;
+  border-radius: 5px; /* Bo tròn hoàn toàn */
+  object-fit: cover;  /* Giữ hình không bị méo */
+}
+
+
+
+    @keyframes flyRight {
+      0% { left: -100px; opacity: 1; }
+      80% { left: 100vw; opacity: 1; }
+      100% { left: 100vw; opacity: 0; }
+    }
+
+    #message {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 28px;
+      color: #ff4081;
+      text-align: center;
+      opacity: 0;
+      animation: fadeIn 2s 2s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .heart {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-120vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Trang 1 -->
+<div class="container" id="page1">
+  <div class="left">
+    <img src="anhem4.jfif" alt="Ảnh người yêu">
+  </div>
+  <div class="right">
+    <div id="passwordDisplay">●●●●●●●●</div>
+    <div class="keypad">
+      <button onclick="pressKey('1')">1</button>
+      <button onclick="pressKey('2')">2</button>
+      <button onclick="pressKey('3')">3</button><br>
+      <button onclick="pressKey('4')">4</button>
+      <button onclick="pressKey('5')">5</button>
+      <button onclick="pressKey('6')">6</button><br>
+      <button onclick="pressKey('7')">7</button>
+      <button onclick="pressKey('8')">8</button>
+      <button onclick="pressKey('9')">9</button><br>
+      <button onclick="clearPass()">Xóa</button>
+      <button onclick="pressKey('0')">0</button>
+      <button onclick="checkPass()">OK</button>
+    </div>
+  </div>
+</div>
+
+<!-- Trang 2 -->
+<div class="container hidden" id="page2">
+  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;">
+    <img src="anhem1.jfif" alt="Ảnh người yêu" style="max-width: 300px; border-radius: 15px;">
+    <button id="giftBtn">Xem quà 🎉</button>
+  </div>
+</div>
+
+<!-- Trang 3 -->
+<div class="hidden" id="page3">
+  <div id="message">Happy Birthday My's Heart 💖 I love you so much 💖</div>
+</div>
+
+<script>
+  let enteredPass = "";
+
+  function pressKey(num) {
+    if (enteredPass.length < 8) {
+      enteredPass += num;
+      updateDisplay();
+    }
+  }
+
+  function clearPass() {
+    enteredPass = "";
+    updateDisplay();
+  }
+
+  function updateDisplay() {
+    const digits = enteredPass.split('');
+    const display = digits.join('');
+    const remaining = 8 - digits.length;
+    const emptyDots = Array(remaining).fill('●').join('');
+    document.getElementById('passwordDisplay').innerText = display + emptyDots;
+  }
+
+  function checkPass() {
+    if (enteredPass === '08082010') {
+      document.getElementById('page1').classList.add('hidden');
+      document.getElementById('page2').classList.remove('hidden');
+      createHearts('page2');
+    } else {
+      alert('Sai mật khẩu rồi nè 😢');
+      clearPass();
+    }
+  }
+
+  document.getElementById('giftBtn').onclick = function() {
+    document.getElementById('page2').classList.add('hidden');
+    document.getElementById('page3').classList.remove('hidden');
+    createBubbles();
+  };
+
+ function createBubbles() {
+  const imageList = ['anhem1.jfif', 'anhem2.jfif', 'anhem3.jfif', 'anhem4.jfif'];
+
+  imageList.forEach(img => {
+    for (let i = 0; i < 30; i++) {
+      const bubble = document.createElement('img');
+      bubble.src = img;
+      bubble.className = 'bubble';
+      bubble.style.width = '80px';
+      bubble.style.height = '80px';
+      bubble.style.borderRadius = '10px';
+      bubble.style.objectFit = 'cover';
+      bubble.style.position = 'absolute';
+      bubble.style.top = `${Math.random() * 80 + 10}vh`;
+      bubble.style.left = `-100px`; // bắt đầu ngoài màn hình
+      bubble.style.animation = `flyRight 10s forwards`;
+      bubble.style.animationDelay = `${Math.random() * 2}s`;
+
+      const container = document.getElementById('page3');
+      if (container) {
+        container.appendChild(bubble);
+      } else {
+        console.error('Không tìm thấy phần tử page3');
+      }
+    }
+  });
+
+
+  // Hiện lời chúc sau khi bong bóng bay xong
+  setTimeout(() => {
+    document.getElementById('message').style.opacity = '1';
+  }, duration + 1000); // đợi thêm 1s sau khi bay xong
+}
+
+
+  function createHearts(targetId) {
+    const container = document.getElementById(targetId);
+    for (let i = 0; i < 20; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.innerText = '❤️';
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.fontSize = `${20 + Math.random() * 20}px`;
+      heart.style.animationDuration = `${4 + Math.random() * 4}s`;
+      container.appendChild(heart);
+    }
+  }
+
+  // Trái tim bay ở trang 1 khi mở
+  createHearts('page1');
+</script>
+
+</body>
+</html>
